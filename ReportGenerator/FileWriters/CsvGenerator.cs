@@ -1,21 +1,24 @@
-﻿using System.IO;
-
+﻿using System.Collections.Generic;
+using System.IO;
 using CsvHelper;
-
 using ReportGeneratorUI.Model;
 
 namespace ReportGeneratorUI
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
+{    
     /// <summary>
-    /// TODO: Update summary.
+    /// Generates file in csv format
     /// </summary>
     public class CsvGenerator : FileGenerator
     {
+        /// <summary>
+        /// The save records.
+        /// </summary>
+        /// <param name="results">
+        /// The results.
+        /// </param>
+        /// <param name="filePath">
+        /// The file path.
+        /// </param>
         protected override void SaveRecords(IEnumerable<ResultRecordBase> results, string filePath)
         {
             using (var csv = new CsvWriter(new StreamWriter(filePath)))
