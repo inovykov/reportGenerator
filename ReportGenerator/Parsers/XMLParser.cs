@@ -1,4 +1,6 @@
-﻿namespace ReportGeneratorUI
+﻿using System;
+
+namespace ReportGeneratorUI
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -53,12 +55,13 @@
                 var pathToThumb = this.getLastMessageByXPath(doc, "./*[@level='INFO' and @category='Screenshot']/a/img", "src");
 
                 var pathToFullImg = this.getLastMessageByXPath(doc, "./*[@level='INFO' and @category='Screenshot']/a", "href");
+                
+                var imageThumb = string.IsNullOrEmpty(pathToFullImg) ? null : string.Format("{0}//{1}", this.PathToDirectory, pathToThumb);
 
-                var imageThumb = new Bitmap(string.Format("{0}//{1}", this.PathToDirectory, pathToThumb));
-
-                var fullImagePath = string.Format("{0}//{1}", this.PathToDirectory, pathToFullImg);
+                var fullImagePath = string.IsNullOrEmpty(pathToFullImg) ? null : string.Format("{0}//{1}", this.PathToDirectory, pathToFullImg);
 
                 this.Result.Add(new ResultRecord(testNumber, message, imageThumb, fullImagePath, stackTrace, step, htmlPath));
+                
                 return;
             }
 

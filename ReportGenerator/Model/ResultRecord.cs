@@ -35,8 +35,8 @@ namespace ReportGeneratorUI.Model
         /// <param name="testResult">
         /// The test result.
         /// </param>
-        /// <param name="imageThumbnail">
-        /// The imageThumbnail.
+        /// <param name="imageThumbnailPath">
+        /// The imageThumbnailPath.
         /// </param>
         /// <param name="fullImagePath">
         /// The full Image Path.
@@ -47,15 +47,15 @@ namespace ReportGeneratorUI.Model
         /// <param name="stepNumber">
         /// The step Number.
         /// </param>
-        public ResultRecord(int testNumber, string testResult, Image imageThumbnail = null, string fullImagePath = null, string stackTrace = null, string stepNumber = null, string htmlPath = null)
+        public ResultRecord(int testNumber, string testResult, string imageThumbnailPath = null, string fullImagePath = null, string stackTrace = null, string stepNumber = null, string htmlPath = null)
         {
             this.TestNumber = testNumber;    
             
             this.TestResult = testResult;
 
-            if (imageThumbnail != null)
+            if (!string.IsNullOrEmpty(imageThumbnailPath))
             {
-                this.ImageThumbnail = imageThumbnail;
+                this.ImageThumbnail = new Bitmap(imageThumbnailPath);
             }
 
             this.FullImagePath = fullImagePath;
@@ -69,7 +69,7 @@ namespace ReportGeneratorUI.Model
         }
 
         /// <summary>
-        /// Gets or sets path to imageThumbnail if any
+        /// Gets or sets path to imageThumbnailPath if any
         /// </summary>
         public Image ImageThumbnail { get; set; }
 
