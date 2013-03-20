@@ -34,6 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.lblStepNumber = new System.Windows.Forms.Label();
+            this.btnOpenInBrowser = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imgPanelScreenShot)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,11 +98,22 @@
             this.lblStepNumber.Size = new System.Drawing.Size(0, 13);
             this.lblStepNumber.TabIndex = 7;
             // 
+            // btnOpenInBrowser
+            // 
+            this.btnOpenInBrowser.Location = new System.Drawing.Point(1163, 757);
+            this.btnOpenInBrowser.Name = "btnOpenInBrowser";
+            this.btnOpenInBrowser.Size = new System.Drawing.Size(200, 23);
+            this.btnOpenInBrowser.TabIndex = 8;
+            this.btnOpenInBrowser.Text = "Open in browser";
+            this.btnOpenInBrowser.UseVisualStyleBackColor = true;
+            this.btnOpenInBrowser.Click += new System.EventHandler(this.btnOpenInBrowser_Click);
+            // 
             // DetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1500, 791);
+            this.Controls.Add(this.btnOpenInBrowser);
             this.Controls.Add(this.lblStepNumber);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.label2);
@@ -124,5 +136,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label lblStepNumber;
+        private System.Windows.Forms.Button btnOpenInBrowser;
     }
 }

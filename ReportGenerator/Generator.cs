@@ -197,6 +197,8 @@ namespace ReportGeneratorUI_0._1
 
             var testNumber = int.Parse(doc.Value.Substring(22, 6));
 
+            var htmlPath = filePath.Replace(".xml", ".html");
+
             if (failures.Any())
             {
                 var stackTrace = this.getLastMessageByXPath(doc, "./*[@level='DEBUG']");
@@ -215,13 +217,13 @@ namespace ReportGeneratorUI_0._1
 
                 var fullImagePath = string.Format("{0}//{1}", this.directoryPath, pathToFullImg);
 
-                this.result.Add(new ResultRecord(testNumber, message, imageThumb, fullImagePath, stackTrace, step));
+                this.result.Add(new ResultRecord(testNumber, message, imageThumb, fullImagePath, stackTrace, step, htmlPath));
                 return;
             }
 
             this.PassedCount++;
 
-            this.result.Add(new ResultRecord(testNumber, Passed));
+            this.result.Add(new ResultRecord(testNumber, Passed, htmlPath: htmlPath));
         }
 
         /// <summary>

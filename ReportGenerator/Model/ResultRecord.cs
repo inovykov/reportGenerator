@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.IO;
 
 namespace ReportGeneratorUI_0._1.Model
 {
@@ -47,7 +48,7 @@ namespace ReportGeneratorUI_0._1.Model
         /// <param name="stepNumber">
         /// The step Number.
         /// </param>
-        public ResultRecord(int testNumber, string testResult, Image imageThumbnail = null, string fullImagePath = null, string stackTrace = null, string stepNumber = null)
+        public ResultRecord(int testNumber, string testResult, Image imageThumbnail = null, string fullImagePath = null, string stackTrace = null, string stepNumber = null, string htmlPath = null)
         {
             this.TestNumber = testNumber;    
             
@@ -63,6 +64,8 @@ namespace ReportGeneratorUI_0._1.Model
             this.StackTrace = stackTrace;
 
             this.StepNumber = stepNumber;
+
+            this.PathToHtlmVersion = htmlPath;
 
         }
 
@@ -95,6 +98,11 @@ namespace ReportGeneratorUI_0._1.Model
         /// Gets or sets the step number.
         /// </summary>
         public string StepNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the path to htlm version.
+        /// </summary>
+        public string PathToHtlmVersion { get; set; }
 
     }
 }

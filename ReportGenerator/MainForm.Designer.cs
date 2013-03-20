@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tbPathToDir = new System.Windows.Forms.TextBox();
             this.lblPathToDirectory = new System.Windows.Forms.Label();
@@ -45,10 +46,12 @@
             this.rbShowFailed = new System.Windows.Forms.RadioButton();
             this.groupBoxFilter = new System.Windows.Forms.GroupBox();
             this.tbFilter = new System.Windows.Forms.TextBox();
-            this.resultRecordBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.PathToHtlmVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.testNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.testResultDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.imageNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.resultRecordBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.StackTrace = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gvResults)).BeginInit();
             this.groupBoxFilter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultRecordBindingSource)).BeginInit();
@@ -96,13 +99,19 @@
             this.gvResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.testNumberDataGridViewTextBoxColumn,
             this.testResultDataGridViewTextBoxColumn,
-            this.imageNameDataGridViewTextBoxColumn});
+            this.imageNameDataGridViewTextBoxColumn,
+            this.PathToHtlmVersion,
+            this.StackTrace});
             this.gvResults.DataSource = this.resultRecordBindingSource;
             this.gvResults.Location = new System.Drawing.Point(16, 113);
             this.gvResults.Name = "gvResults";
             this.gvResults.Size = new System.Drawing.Size(1113, 524);
             this.gvResults.TabIndex = 6;
+            this.gvResults.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvResults_CellContentClick);
             this.gvResults.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvResults_CellDoubleClick);
+            this.gvResults.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvResults_CellMouseEnter);
+            this.gvResults.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvResults_CellMouseLeave);
+            this.gvResults.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gvResults_MouseClick);
             // 
             // btnDirectory
             // 
@@ -231,9 +240,17 @@
             this.tbFilter.Enter += new System.EventHandler(this.tbFilter_Enter);
             this.tbFilter.Leave += new System.EventHandler(this.tbFilter_Leave);
             // 
-            // resultRecordBindingSource
+            // PathToHtlmVersion
             // 
-            this.resultRecordBindingSource.DataSource = typeof(ReportGeneratorUI_0._1.Model.ResultRecord);
+            this.PathToHtlmVersion.DataPropertyName = "PathToHtlmVersion";
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10);
+            this.PathToHtlmVersion.DefaultCellStyle = dataGridViewCellStyle2;
+            this.PathToHtlmVersion.DividerWidth = 2;
+            this.PathToHtlmVersion.HeaderText = "Open in browser";
+            this.PathToHtlmVersion.Name = "PathToHtlmVersion";
+            this.PathToHtlmVersion.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.PathToHtlmVersion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.PathToHtlmVersion.Visible = false;
             // 
             // testNumberDataGridViewTextBoxColumn
             // 
@@ -267,6 +284,17 @@
             this.imageNameDataGridViewTextBoxColumn.ReadOnly = true;
             this.imageNameDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.imageNameDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // resultRecordBindingSource
+            // 
+            this.resultRecordBindingSource.DataSource = typeof(ReportGeneratorUI_0._1.Model.ResultRecord);
+            // 
+            // StackTrace
+            // 
+            this.StackTrace.DataPropertyName = "StackTrace";
+            this.StackTrace.HeaderText = "StackTrace";
+            this.StackTrace.Name = "StackTrace";
+            this.StackTrace.Visible = false;
             // 
             // MainForm
             // 
@@ -316,6 +344,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn testNumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn testResultDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewImageColumn imageNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PathToHtlmVersion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn StackTrace;
     }
 }
 
