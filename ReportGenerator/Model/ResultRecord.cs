@@ -1,12 +1,11 @@
 ﻿using System.Drawing;
-using System.IO;
 
-namespace ReportGeneratorUI_0._1.Model
+namespace ReportGeneratorUI.Model
 {
     /// <summary>
     /// Class represents record from results list
     /// </summary>
-    public class ResultRecord
+    public class ResultRecord : ResultRecordBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResultRecord"/> class. 
@@ -70,16 +69,6 @@ namespace ReportGeneratorUI_0._1.Model
         }
 
         /// <summary>
-        /// Gets or sets number of the test case
-        /// </summary>
-        public int? TestNumber { get; set; }
-
-        /// <summary>
-        /// Gets or sets resutls of the test case
-        /// </summary>
-        public string TestResult { get; set; }
-
-        /// <summary>
         /// Gets or sets path to imageThumbnail if any
         /// </summary>
         public Image ImageThumbnail { get; set; }
@@ -88,11 +77,6 @@ namespace ReportGeneratorUI_0._1.Model
         /// Gets or sets the full image.
         /// </summary>
         public string FullImagePath { get; set; }
-
-        /// <summary>
-        /// Gets or sets the stack trace.
-        /// </summary>
-        public string StackTrace { get; set; }
 
         /// <summary>
         /// Gets or sets the step number.

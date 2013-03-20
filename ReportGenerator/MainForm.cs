@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
+using ReportGeneratorUI;
+
 namespace ReportGeneratorUI_0._1
 {
     public partial class MainForm : Form
@@ -65,7 +67,6 @@ namespace ReportGeneratorUI_0._1
         {
             try
             {
-                generator.ClearResult();
                 generator.ReadFiles(tbPathToDir.Text);
                 this.BindGrid();
 
@@ -207,6 +208,7 @@ namespace ReportGeneratorUI_0._1
             if (e.Button == MouseButtons.Right)
             {
                 this.gridContextMenu = new ContextMenu();
+
                 var cmOpenDetails = new MenuItem("Open details");
                 var cmOpenInBrowser = new MenuItem("Open in browser");
                 var cmCopyToBuffer = new MenuItem("Copy stack trace to buffer");

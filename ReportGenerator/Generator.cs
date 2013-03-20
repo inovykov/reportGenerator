@@ -1,65 +1,54 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
-using System.Xml.XPath;
-using CsvHelper;
-
-using ReportGeneratorUI_0._1.Model;
-
-namespace ReportGeneratorUI_0._1
+﻿namespace ReportGeneratorUI
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using ReportGeneratorUI.Model;
+    using ReportGeneratorUI.Parsers;
+
     /// <summary>
     /// The generator.
     /// </summary>
     public class Generator
     {
-        /// <summary>
-        /// The passed message.
-        /// </summary>
-        private const string PassedMessagePattern = "{0} test cases are passed";
-
-        /// <summary>
-        /// The failed message.
-        /// </summary>
-        private const string FailedMessagePattern = "{0} test cases are failed";
-
-        /// <summary>
-        /// The failed count.
-        /// </summary>
-        public int FailedCount;
-
-        /// <summary>
-        /// The passed count.
-        /// </summary>
-        public int PassedCount;
-
-        /// <summary>
-        /// The passed.
-        /// </summary>
-        private const string Passed = "Passed";
-
-        /// <summary>
-        /// The result.
-        /// </summary>
-        private IList<ResultRecord> result;
+        #region PRIVATE FIELDS
 
         /// <summary>
         /// The instance.
         /// </summary>
         private static Generator instance;
 
-        private string directoryPath;
+        /// <summary>
+        /// The parser.
+        /// </summary>
+        private readonly Parser parser;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Generator"/> class.
+        /// The file generator.
+        /// </summary>
+        private readonly FileGenerator fileGenerator;
+        
+        /// <summary>
+        /// The result.
+        /// </summary>
+        private IList<ResultRecord> result;
+
+        #endregion PRIVATE FIELDS
+
+        #region CONSTRUCTORS
+
+        /// <summary>
+        /// Prevents a default instance of the <see cref="Generator"/> class from being created. 
         /// </summary>
         private Generator()
         {
             this.result = new List<ResultRecord>();
+
+            // 2DOinov: move choosing of parser and generator type on UI
+            this.parser = new XmlParser();
+            this.fileGenerator = new CsvGenerator();
         }
 
         /// <summary>
@@ -73,6 +62,24 @@ namespace ReportGeneratorUI_0._1
             }
         }
 
+        #endregion CONSTRUCTORS
+
+
+        #region PUBLIC PROPERTIES
+
+        /// <summary>
+        /// Gets the failed count.
+        /// </summary>
+        public int FailedCount { get; private set; }
+
+        /// <summary>
+        /// Gets the passed count.
+        /// </summary>
+        public int PassedCount { get; private set; }
+
+        #endregion PUBLIC PROPERTIES
+
+
         /// <summary>
         /// The read files.
         /// </summary>
@@ -81,13 +88,11 @@ namespace ReportGeneratorUI_0._1
         /// </param>
         public void ReadFiles(string directoryPath)
         {
-            this.directoryPath = directoryPath;
-            var filePaths = Directory.EnumerateFiles(directoryPath, "*.xml");
+            this.parser.ParseDirectory(directoryPath);
+            this.result = this.parser.Result;
 
-            foreach (var filePath in filePaths)
-            {
-                this.ProcessFile(filePath);
-            }
+            this.PassedCount = this.parser.PassedCount;
+            this.FailedCount = this.parser.FailedCount;
         }
 
         /// <summary>
@@ -98,24 +103,7 @@ namespace ReportGeneratorUI_0._1
         /// </param>
         public void WriteToFile(string filePath)
         {
-            if (this.result.Count == 0)
-            {
-                throw new ApplicationException("No records to display");
-            }
-
-            var preparedResult = new List<ShortResultRecord>
-                                     {
-                                         new ShortResultRecord(string.Format(PassedMessagePattern, this.PassedCount)),
-                                         new ShortResultRecord(string.Format(FailedMessagePattern, this.FailedCount)),
-                                         new ShortResultRecord()
-                                     };
-
-            preparedResult.AddRange(this.result.Select(x => new ShortResultRecord(x.TestNumber, x.TestResult)));
-
-            using (var csv = new CsvWriter(new StreamWriter(filePath)))
-            {
-                csv.WriteRecords(preparedResult);
-            }
+            this.fileGenerator.GenerateReport(this.result, filePath, this.PassedCount, this.FailedCount);
         }
 
         /// <summary>
@@ -161,7 +149,7 @@ namespace ReportGeneratorUI_0._1
 
             if (isPassed.HasValue)
             {
-                query = query.Where(x => (isPassed.Value ? x.TestResult == Passed : x.TestResult != Passed));
+                query = query.Where(x => (isPassed.Value ? x.TestResult == Constants.Passed : x.TestResult != Constants.Passed));
             }
 
             if (!string.IsNullOrEmpty(filter))
@@ -169,83 +157,7 @@ namespace ReportGeneratorUI_0._1
                 query = query.Where(x => Convert.ToString(x.TestNumber).Contains(filter) || x.TestResult.Contains(filter));
             }
 
-
             return query.ToList();
-        }
-
-        public void ClearResult()
-        {
-            this.result = new List<ResultRecord>();
-            this.FailedCount = 0;
-            this.PassedCount = 0;
-
-        }
-
-        /// <summary>
-        /// The process file.
-        /// </summary>
-        /// <param name="filePath">
-        /// The file path.
-        /// </param>
-        private void ProcessFile(string filePath)
-        {
-            var doc = XElement.Load(filePath);
-            
-            IEnumerable<XElement> failures =
-                ((IEnumerable)doc.XPathEvaluate("./*[@level='FAILURE']")).Cast<XElement>();
-
-
-            var testNumber = int.Parse(doc.Value.Substring(22, 6));
-
-            var htmlPath = filePath.Replace(".xml", ".html");
-
-            if (failures.Any())
-            {
-                var stackTrace = this.getLastMessageByXPath(doc, "./*[@level='DEBUG']");
-
-                this.FailedCount++;
-
-                var step = this.getLastMessageByXPath(doc, "./*[@level='INFO' and @category='Step']");
-
-                var message = failures.ToList().First().Attribute("message").Value;
-
-                var pathToThumb = this.getLastMessageByXPath(doc, "./*[@level='INFO' and @category='Screenshot']/a/img", "src");
-
-                var pathToFullImg = this.getLastMessageByXPath(doc, "./*[@level='INFO' and @category='Screenshot']/a", "href");
-                
-                var imageThumb = new Bitmap(string.Format("{0}//{1}", this.directoryPath, pathToThumb));
-
-                var fullImagePath = string.Format("{0}//{1}", this.directoryPath, pathToFullImg);
-
-                this.result.Add(new ResultRecord(testNumber, message, imageThumb, fullImagePath, stackTrace, step, htmlPath));
-                return;
-            }
-
-            this.PassedCount++;
-
-            this.result.Add(new ResultRecord(testNumber, Passed, htmlPath: htmlPath));
-        }
-
-        /// <summary>
-        /// The get last message by x path.
-        /// </summary>
-        /// <param name="doc">
-        /// The doc.
-        /// </param>
-        /// <param name="xpath">
-        /// The xpath.
-        /// </param>
-        /// <param name="attribute">
-        /// The attribute.
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        private string getLastMessageByXPath(XElement doc, string xpath, string attribute = "message")
-        {
-            var xElement = ((IEnumerable)doc.XPathEvaluate(xpath)).Cast<XElement>().ToList().LastOrDefault();
-
-            return xElement == null ? string.Empty : xElement.Attribute(attribute).Value;
         }
     }
 }

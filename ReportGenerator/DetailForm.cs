@@ -8,7 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using ReportGeneratorUI_0._1.Model;
+using ReportGeneratorUI;
+using ReportGeneratorUI.Model;
 
 namespace ReportGeneratorUI_0._1
 {

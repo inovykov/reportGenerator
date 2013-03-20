@@ -1,4 +1,6 @@
-﻿namespace ReportGeneratorUI_0._1
+﻿using ReportGeneratorUI.Model;
+
+namespace ReportGeneratorUI_0._1
 {
     partial class MainForm
     {
@@ -29,12 +31,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tbPathToDir = new System.Windows.Forms.TextBox();
             this.lblPathToDirectory = new System.Windows.Forms.Label();
             this.btnDownloadCSV = new System.Windows.Forms.Button();
             this.gvResults = new System.Windows.Forms.DataGridView();
+            this.testNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.testResultDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.imageNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.PathToHtlmVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StackTrace = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.resultRecordBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnDirectory = new System.Windows.Forms.Button();
             this.btnGo = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,15 +54,9 @@
             this.rbShowFailed = new System.Windows.Forms.RadioButton();
             this.groupBoxFilter = new System.Windows.Forms.GroupBox();
             this.tbFilter = new System.Windows.Forms.TextBox();
-            this.PathToHtlmVersion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.testNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.testResultDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.imageNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.resultRecordBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.StackTrace = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gvResults)).BeginInit();
-            this.groupBoxFilter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultRecordBindingSource)).BeginInit();
+            this.groupBoxFilter.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbPathToDir
@@ -69,9 +71,9 @@
             this.lblPathToDirectory.AutoSize = true;
             this.lblPathToDirectory.Location = new System.Drawing.Point(13, 21);
             this.lblPathToDirectory.Name = "lblPathToDirectory";
-            this.lblPathToDirectory.Size = new System.Drawing.Size(90, 13);
+            this.lblPathToDirectory.Size = new System.Drawing.Size(87, 13);
             this.lblPathToDirectory.TabIndex = 2;
-            this.lblPathToDirectory.Text = "Path To Directory";
+            this.lblPathToDirectory.Text = "Path ToDirectory";
             // 
             // btnDownloadCSV
             // 
@@ -112,6 +114,62 @@
             this.gvResults.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvResults_CellMouseEnter);
             this.gvResults.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvResults_CellMouseLeave);
             this.gvResults.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gvResults_MouseClick);
+            // 
+            // testNumberDataGridViewTextBoxColumn
+            // 
+            this.testNumberDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.testNumberDataGridViewTextBoxColumn.DataPropertyName = "TestNumber";
+            this.testNumberDataGridViewTextBoxColumn.FillWeight = 70F;
+            this.testNumberDataGridViewTextBoxColumn.HeaderText = "TestNumber";
+            this.testNumberDataGridViewTextBoxColumn.Name = "testNumberDataGridViewTextBoxColumn";
+            this.testNumberDataGridViewTextBoxColumn.ReadOnly = true;
+            this.testNumberDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.testNumberDataGridViewTextBoxColumn.Width = 90;
+            // 
+            // testResultDataGridViewTextBoxColumn
+            // 
+            this.testResultDataGridViewTextBoxColumn.DataPropertyName = "TestResult";
+            this.testResultDataGridViewTextBoxColumn.FillWeight = 750F;
+            this.testResultDataGridViewTextBoxColumn.HeaderText = "TestResult";
+            this.testResultDataGridViewTextBoxColumn.Name = "testResultDataGridViewTextBoxColumn";
+            this.testResultDataGridViewTextBoxColumn.ReadOnly = true;
+            this.testResultDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            // 
+            // imageNameDataGridViewTextBoxColumn
+            // 
+            this.imageNameDataGridViewTextBoxColumn.DataPropertyName = "ImageThumbnail";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.NullValue = null;
+            this.imageNameDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            this.imageNameDataGridViewTextBoxColumn.FillWeight = 200F;
+            this.imageNameDataGridViewTextBoxColumn.HeaderText = "ImageThumbnail";
+            this.imageNameDataGridViewTextBoxColumn.Name = "imageNameDataGridViewTextBoxColumn";
+            this.imageNameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.imageNameDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.imageNameDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // PathToHtlmVersion
+            // 
+            this.PathToHtlmVersion.DataPropertyName = "PathToHtlmVersion";
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10);
+            this.PathToHtlmVersion.DefaultCellStyle = dataGridViewCellStyle2;
+            this.PathToHtlmVersion.DividerWidth = 2;
+            this.PathToHtlmVersion.HeaderText = "Open in browser";
+            this.PathToHtlmVersion.Name = "PathToHtlmVersion";
+            this.PathToHtlmVersion.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.PathToHtlmVersion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.PathToHtlmVersion.Visible = false;
+            // 
+            // StackTrace
+            // 
+            this.StackTrace.DataPropertyName = "StackTrace";
+            this.StackTrace.HeaderText = "StackTrace";
+            this.StackTrace.Name = "StackTrace";
+            this.StackTrace.Visible = false;
+            // 
+            // resultRecordBindingSource
+            // 
+            this.resultRecordBindingSource.DataSource = typeof(ReportGeneratorUI.Model.ResultRecord);
             // 
             // btnDirectory
             // 
@@ -240,62 +298,6 @@
             this.tbFilter.Enter += new System.EventHandler(this.tbFilter_Enter);
             this.tbFilter.Leave += new System.EventHandler(this.tbFilter_Leave);
             // 
-            // PathToHtlmVersion
-            // 
-            this.PathToHtlmVersion.DataPropertyName = "PathToHtlmVersion";
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10);
-            this.PathToHtlmVersion.DefaultCellStyle = dataGridViewCellStyle2;
-            this.PathToHtlmVersion.DividerWidth = 2;
-            this.PathToHtlmVersion.HeaderText = "Open in browser";
-            this.PathToHtlmVersion.Name = "PathToHtlmVersion";
-            this.PathToHtlmVersion.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.PathToHtlmVersion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.PathToHtlmVersion.Visible = false;
-            // 
-            // testNumberDataGridViewTextBoxColumn
-            // 
-            this.testNumberDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.testNumberDataGridViewTextBoxColumn.DataPropertyName = "TestNumber";
-            this.testNumberDataGridViewTextBoxColumn.FillWeight = 70F;
-            this.testNumberDataGridViewTextBoxColumn.HeaderText = "TestNumber";
-            this.testNumberDataGridViewTextBoxColumn.Name = "testNumberDataGridViewTextBoxColumn";
-            this.testNumberDataGridViewTextBoxColumn.ReadOnly = true;
-            this.testNumberDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.testNumberDataGridViewTextBoxColumn.Width = 90;
-            // 
-            // testResultDataGridViewTextBoxColumn
-            // 
-            this.testResultDataGridViewTextBoxColumn.DataPropertyName = "TestResult";
-            this.testResultDataGridViewTextBoxColumn.FillWeight = 750F;
-            this.testResultDataGridViewTextBoxColumn.HeaderText = "TestResult";
-            this.testResultDataGridViewTextBoxColumn.Name = "testResultDataGridViewTextBoxColumn";
-            this.testResultDataGridViewTextBoxColumn.ReadOnly = true;
-            this.testResultDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            // 
-            // imageNameDataGridViewTextBoxColumn
-            // 
-            this.imageNameDataGridViewTextBoxColumn.DataPropertyName = "ImageThumbnail";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.NullValue = null;
-            this.imageNameDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.imageNameDataGridViewTextBoxColumn.FillWeight = 200F;
-            this.imageNameDataGridViewTextBoxColumn.HeaderText = "ImageThumbnail";
-            this.imageNameDataGridViewTextBoxColumn.Name = "imageNameDataGridViewTextBoxColumn";
-            this.imageNameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.imageNameDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.imageNameDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // resultRecordBindingSource
-            // 
-            this.resultRecordBindingSource.DataSource = typeof(ReportGeneratorUI_0._1.Model.ResultRecord);
-            // 
-            // StackTrace
-            // 
-            this.StackTrace.DataPropertyName = "StackTrace";
-            this.StackTrace.HeaderText = "StackTrace";
-            this.StackTrace.Name = "StackTrace";
-            this.StackTrace.Visible = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -315,9 +317,9 @@
             this.Name = "MainForm";
             this.Text = "Report Generator";
             ((System.ComponentModel.ISupportInitialize)(this.gvResults)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.resultRecordBindingSource)).EndInit();
             this.groupBoxFilter.ResumeLayout(false);
             this.groupBoxFilter.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.resultRecordBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -8,8 +8,8 @@
     <ProjectGuid>{15560139-7F36-4A97-8C07-5CB5C3F09AE7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReportGeneratorUI_0._1</RootNamespace>
-    <AssemblyName>ReportGeneratorUI_0.1</AssemblyName>
+    <RootNamespace>ReportGeneratorUI</RootNamespace>
+    <AssemblyName>ReportGeneratorUI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -50,12 +50,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\Constants.cs" />
     <Compile Include="DetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DetailForm.Designer.cs">
       <DependentUpon>DetailForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileWriters\CsvGenerator.cs" />
+    <Compile Include="FileWriters\FileGenerator.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,9 +67,12 @@
     </Compile>
     <Compile Include="Generator.cs" />
     <Compile Include="Model\ResultRecord.cs" />
+    <Compile Include="Model\ResultRecordBase.cs" />
     <Compile Include="Model\ShortResultRecord.cs" />
+    <Compile Include="Parsers\XMLParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Parsers\Parser.cs" />
     <EmbeddedResource Include="DetailForm.resx">
       <DependentUpon>DetailForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -81,6 +87,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\DataSources\ReportGeneratorUI_0._1.Model.ResultRecord.datasource" />
     <None Include="Properties\Settings.settings">
@@ -93,6 +100,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

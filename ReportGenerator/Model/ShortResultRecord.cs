@@ -1,9 +1,9 @@
-﻿namespace ReportGeneratorUI_0._1.Model
+﻿namespace ReportGeneratorUI.Model
 {
     /// <summary>
     /// Short form of record for downloading
     /// </summary>
-    public class ShortResultRecord
+    public class ShortResultRecord : ResultRecordBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ShortResultRecord"/> class.
@@ -21,14 +21,18 @@
         /// <param name="testResult">
         /// The test result.
         /// </param>
-        public ShortResultRecord(int? testNumber, string testResult)
+        /// <param name="stackTrace">
+        /// The stack Trace.
+        /// </param>
+        public ShortResultRecord(int? testNumber, string testResult, string stackTrace = null)
         {
             if (testNumber.HasValue)
             {
-                TestNumber = testNumber;
+                this.TestNumber = testNumber;
             }
 
-            TestResult = testResult;
+            this.TestResult = testResult;
+            this.StackTrace = stackTrace;
         }
 
         /// <summary>
@@ -39,17 +43,7 @@
         /// </param>
         public ShortResultRecord(string testResult)
         {
-            TestResult = testResult;
+            this.TestResult = testResult;
         }
-
-        /// <summary>
-        /// Gets or sets number of the test case
-        /// </summary>
-        public int? TestNumber { get; set; }
-
-        /// <summary>
-        /// Gets or sets resutls of the test case
-        /// </summary>
-        public string TestResult { get; set; }
     }
 }
