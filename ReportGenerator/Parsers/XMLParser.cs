@@ -1,10 +1,7 @@
-﻿using System;
-
-namespace ReportGeneratorUI
+﻿namespace ReportGeneratorUI
 {
     using System.Collections;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.Linq;
     using System.Xml.Linq;
     using System.Xml.XPath;
@@ -46,7 +43,7 @@ namespace ReportGeneratorUI
             {
                 var stackTrace = this.getLastMessageByXPath(doc, "./*[@level='DEBUG']");
 
-                this.FailedCount++;
+                this.Result.FailedCount++;
 
                 var step = this.getLastMessageByXPath(doc, "./*[@level='INFO' and @category='Step']");
 
@@ -60,14 +57,14 @@ namespace ReportGeneratorUI
 
                 var fullImagePath = string.IsNullOrEmpty(pathToFullImg) ? null : string.Format("{0}//{1}", this.PathToDirectory, pathToFullImg);
 
-                this.Result.Add(new ResultRecord(testNumber, message, imageThumb, fullImagePath, stackTrace, step, htmlPath));
+                this.Result.Result.Add(new ResultRecord(testNumber, message, imageThumb, fullImagePath, stackTrace, step, htmlPath));
                 
                 return;
             }
 
-            this.PassedCount++;
+            this.Result.PassedCount++;
 
-            this.Result.Add(new ResultRecord(testNumber, Constants.Passed, htmlPath: htmlPath));
+            this.Result.Result.Add(new ResultRecord(testNumber, Constants.Passed, htmlPath: htmlPath));
         }
 
         /// <summary>

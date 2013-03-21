@@ -19,21 +19,11 @@
         /// The instance.
         /// </summary>
         private static Generator instance;
-
-        /// <summary>
-        /// The parser.
-        /// </summary>
-        private readonly Parser parser;
-
-        /// <summary>
-        /// The file generator.
-        /// </summary>
-        private readonly FileGenerator fileGenerator;
         
         /// <summary>
         /// The result.
         /// </summary>
-        private IList<ResultRecord> result;
+        private ResultInfo result;
 
         #endregion PRIVATE FIELDS
 
@@ -44,11 +34,7 @@
         /// </summary>
         private Generator()
         {
-            this.result = new List<ResultRecord>();
-
-            // 2DOinov: move choosing of parser and generator type on UI
-            this.parser = new XmlParser();
-            this.fileGenerator = new CsvGenerator();
+            this.result = new ResultInfo();
         }
 
         /// <summary>
@@ -64,46 +50,33 @@
 
         #endregion CONSTRUCTORS
 
-
-        #region PUBLIC PROPERTIES
-
-        /// <summary>
-        /// Gets the failed count.
-        /// </summary>
-        public int FailedCount { get; private set; }
-
-        /// <summary>
-        /// Gets the passed count.
-        /// </summary>
-        public int PassedCount { get; private set; }
-
-        #endregion PUBLIC PROPERTIES
-
-
         /// <summary>
         /// The read files.
         /// </summary>
+        /// <param name="parser">
+        /// The parser.
+        /// </param>
         /// <param name="directoryPath">
         /// The directory path.
         /// </param>
-        public void ReadFiles(string directoryPath)
+        public void ReadFiles(Parser parser, string directoryPath)
         {
-            this.parser.ParseDirectory(directoryPath);
-            this.result = this.parser.Result;
-
-            this.PassedCount = this.parser.PassedCount;
-            this.FailedCount = this.parser.FailedCount;
+            parser.ParseDirectory(directoryPath);
+            this.result = parser.Result;
         }
 
         /// <summary>
         /// The write to file.
         /// </summary>
+        /// <param name="fileGenerator">
+        /// The file Generator.
+        /// </param>
         /// <param name="filePath">
         /// The file path.
         /// </param>
-        public void WriteToFile(string filePath)
+        public void WriteToFile(FileGenerator fileGenerator, string filePath)
         {
-            this.fileGenerator.GenerateReport(this.result, filePath, this.PassedCount, this.FailedCount);
+            fileGenerator.GenerateReport(this.result, filePath);
         }
 
         /// <summary>
@@ -112,7 +85,7 @@
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        public IEnumerable<ResultRecord> GetAllResults()
+        public ResultInfo GetResultInfo()
         {
             return this.result;
         }
@@ -128,7 +101,7 @@
         /// </returns>
         public ResultRecord GetResultByTestNumber(int testNumber)
         {
-            return this.result.FirstOrDefault(x => x.TestNumber == testNumber);
+            return this.result.Result.Cast<ResultRecord>().FirstOrDefault(x => x.TestNumber == testNumber);
         }
 
         /// <summary>
@@ -145,7 +118,7 @@
         /// </returns>
         public IEnumerable<ResultRecord> GetResultByFilterCondition(bool? isPassed, string filter)
         {
-            IEnumerable<ResultRecord> query = this.result;
+            IEnumerable<ResultRecord> query = this.result.Result.Cast<ResultRecord>();
 
             if (isPassed.HasValue)
             {

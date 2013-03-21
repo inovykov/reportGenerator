@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using ReportGeneratorUI;
+using ReportGeneratorUI.Model;
 
 namespace ReportGeneratorUI_0._1
 {
@@ -67,15 +68,17 @@ namespace ReportGeneratorUI_0._1
         {
             try
             {
-                generator.ReadFiles(tbPathToDir.Text);
+                generator.ReadFiles(new XmlParser(), tbPathToDir.Text);
                 this.BindGrid();
 
-                this.lblPassedCount.Text = generator.PassedCount.ToString();
-                this.lblFailedCount.Text = generator.FailedCount.ToString();
+                ResultInfo resultInfo = generator.GetResultInfo();
+
+                this.lblPassedCount.Text = resultInfo.PassedCount.ToString();
+                this.lblFailedCount.Text = resultInfo.FailedCount.ToString();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(string.Format("Message: {0} /r/n Stack trace: {1}", ex.Message, ex.StackTrace));
             }
         }
 
@@ -121,7 +124,7 @@ namespace ReportGeneratorUI_0._1
             {              
                 try
                 {
-                    generator.WriteToFile(saveFileDialog.FileName);
+                    generator.WriteToFile(new CsvGenerator(), saveFileDialog.FileName);
                 }
                 catch (Exception ex)
                 {

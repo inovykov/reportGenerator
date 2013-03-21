@@ -66,6 +66,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Generator.cs" />
+    <Compile Include="Model\ResultInfo.cs" />
     <Compile Include="Model\ResultRecord.cs" />
     <Compile Include="Model\ResultRecordBase.cs" />
     <Compile Include="Model\ShortResultRecord.cs" />

@@ -1,7 +1,7 @@
 ﻿namespace ReportGeneratorUI
 {
     /// <summary>
-    /// TODO: Update summary.
+    /// Constants
     /// </summary>
     public static class Constants
     {

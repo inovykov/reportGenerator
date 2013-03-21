@@ -100,6 +100,7 @@
             // 
             // btnOpenInBrowser
             // 
+            this.btnOpenInBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOpenInBrowser.Location = new System.Drawing.Point(1163, 757);
             this.btnOpenInBrowser.Name = "btnOpenInBrowser";
             this.btnOpenInBrowser.Size = new System.Drawing.Size(200, 23);

@@ -14,7 +14,7 @@ namespace ReportGeneratorUI.Parsers
         /// <summary>
         /// Gets or sets the search patter.
         /// </summary>
-        private string searchPattern;
+        private readonly string searchPattern;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Parser"/> class.
@@ -29,21 +29,11 @@ namespace ReportGeneratorUI.Parsers
         
 
         #region PUBLIC PROPERTIES
-
-        /// <summary>
-        /// Gets or sets the failed count.
-        /// </summary>
-        public int FailedCount { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the passed count.
-        /// </summary>
-        public int PassedCount { get; protected set; }
         
         /// <summary>
         /// Gets or sets Parsed result
         /// </summary>
-        public IList<ResultRecord> Result { get; protected set; }
+        public ResultInfo Result { get; protected set; }
 
         #endregion PUBLIC PROPERTIES
 
@@ -64,10 +54,7 @@ namespace ReportGeneratorUI.Parsers
         /// </param>
         public virtual void ParseDirectory(string pathToDir)
         {
-            this.Result = new List<ResultRecord>();
-
-            this.PassedCount = 0;
-            this.FailedCount = 0;
+            this.Result = new ResultInfo();
 
             this.PathToDirectory = pathToDir;
 
