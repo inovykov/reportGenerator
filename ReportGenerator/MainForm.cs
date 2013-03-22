@@ -78,7 +78,7 @@ namespace ReportGeneratorUI_0._1
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format("Message: {0} /r/n Stack trace: {1}", ex.Message, ex.StackTrace));
+                MessageBox.Show(string.Format("Message: {0} \r\n Stack trace: {1}", ex.Message, ex.StackTrace));
             }
         }
 
@@ -128,7 +128,7 @@ namespace ReportGeneratorUI_0._1
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(string.Format("Message: {0} \r\n Stack trace: {1}", ex.Message, ex.StackTrace));
                 }
             }
         }

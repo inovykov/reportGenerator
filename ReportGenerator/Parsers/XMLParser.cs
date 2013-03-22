@@ -1,4 +1,6 @@
-﻿namespace ReportGeneratorUI
+﻿using System;
+
+namespace ReportGeneratorUI
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -29,14 +31,18 @@
         /// </param>
         protected override void ProcessFile(string filePath)
         {
+            if (filePath.Contains("SummaryReport"))
+            {
+                return;
+            }
+
             var doc = XElement.Load(filePath);
 
             IEnumerable<XElement> failures =
                 ((IEnumerable)doc.XPathEvaluate("./*[@level='FAILURE']")).Cast<XElement>();
-
-
+            
             var testNumber = int.Parse(doc.Value.Substring(22, 6));
-
+            
             var htmlPath = filePath.Replace(".xml", ".html");
 
             if (failures.Any())
